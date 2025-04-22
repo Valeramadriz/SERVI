@@ -59,6 +59,14 @@
         </div>
 
         <form id="registroForm" class="row g-3">
+          <div class="col-12">
+            <label for="tipoUsuario" class="form-label">Tipo de usuario</label>
+            <select class="form-select" id="tipoUsuario" required>
+              <option value="">Seleccionar...</option>
+              <option value="cliente">Cliente</option>
+              <option value="proveedor">Proveedor de servicios</option>
+            </select>
+          </div>
           <div class="col-md-6">
             <label for="nombre" class="form-label">Nombre</label>
             <input type="text" class="form-control" id="nombre" required />
@@ -90,6 +98,34 @@
               required
             />
           </div>
+          <!-- CAMPOS SOLO PARA PROVEEDORES -->
+          <div id="camposProveedor" class="row g-3 d-none mt-3">
+            <div class="col-md-6">
+              <label for="nombreEmpresa" class="form-label">Nombre de la empresa</label>
+              <input type="text" class="form-control" id="nombreEmpresa" />
+            </div>
+            <div class="col-md-6">
+              <label for="categoriaServicio" class="form-label">Categoría del servicio</label>
+              <input type="text" class="form-control" id="categoriaServicio" />
+            </div>
+            <div class="col-md-12">
+              <label for="descripcionServicio" class="form-label">Descripción del servicio</label>
+              <textarea class="form-control" id="descripcionServicio" rows="3"></textarea>
+            </div>
+            <div class="col-md-6">
+              <label for="ubicacionEmpresa" class="form-label">Ubicación de la empresa</label>
+              <input type="text" class="form-control" id="ubicacionEmpresa" />
+            </div>
+            <div class="col-md-6">
+              <label for="certificados" class="form-label">Certificados de capacitación</label>
+              <input type="file" class="form-control" id="certificados" multiple />
+            </div>
+            <div class="col-md-12">
+              <label for="imagenesLogo" class="form-label">Logo o imágenes del servicio</label>
+              <input type="file" class="form-control" id="imagenesLogo" multiple />
+            </div>
+          </div>
+
           <div class="col-12 text-center mt-4">
             <button type="submit" class="btn btn-primary btn-xl text-uppercase">
               Registrarse
@@ -101,11 +137,42 @@
 
     <script src="js/scripts.js"></script>
     <script>
+      const tipoUsuarioSelect = document.getElementById("tipoUsuario");
+      const camposProveedor = document.getElementById("camposProveedor");
+    
+      tipoUsuarioSelect.addEventListener("change", function () {
+        if (this.value === "proveedor") {
+          camposProveedor.classList.remove("d-none");
+        } else {
+          camposProveedor.classList.add("d-none");
+        }
+      });
+    
       document.getElementById("registroForm").addEventListener("submit", function (e) {
         e.preventDefault();
+    
+        const tipo = tipoUsuarioSelect.value;
+        if (!tipo) {
+          alert("Seleccioná el tipo de usuario.");
+          return;
+        }
+    
+        if (tipo === "proveedor") {
+          const nombreEmpresa = document.getElementById("nombreEmpresa").value;
+          const categoria = document.getElementById("categoriaServicio").value;
+          const descripcion = document.getElementById("descripcionServicio").value;
+    
+          if (!nombreEmpresa || !categoria || !descripcion) {
+            alert("Completá todos los campos requeridos del proveedor.");
+            return;
+          }
+        }
+    
+        // Envío simulado
         alert("¡Registro enviado con éxito!");
-        // Aquí podrías enviar los datos al servidor
+        // Aquí iría el envío real (por fetch, AJAX, etc.)
       });
     </script>
+    
   </body>
 </html>
