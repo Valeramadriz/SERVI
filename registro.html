@@ -77,7 +77,11 @@
           </div>
           <div class="col-md-6">
             <label for="email" class="form-label">Correo Electrónico</label>
-            <input type="email" class="form-control" id="email" required />
+            <div class="input-group">
+              <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+              <input type="email" class="form-control" id="email" required />
+            </div>
+            <small id="emailFeedback" class="form-text text-muted" aria-live="polite"></small>            
           </div>
           <div class="col-md-6">
             <label for="telefono" class="form-label">Teléfono</label>
@@ -124,6 +128,10 @@
               <label for="imagenesLogo" class="form-label">Logo o imágenes del servicio</label>
               <input type="file" class="form-control" id="imagenesLogo" multiple />
             </div>
+            <div class="col-md-12">
+              <div id="preview" class="d-flex flex-wrap mt-3"></div>
+            </div>
+            
           </div>
 
           <div class="col-12 text-center mt-4">
@@ -140,6 +148,36 @@
       const tipoUsuarioSelect = document.getElementById("tipoUsuario");
       const camposProveedor = document.getElementById("camposProveedor");
     
+      // Validación de email en tiempo real
+document.getElementById("email").addEventListener("input", function () {
+  const email = this.value;
+  const feedback = document.getElementById("emailFeedback");
+  if (!email.includes("@")) {
+    feedback.textContent = "El correo debe contener '@'";
+    feedback.style.color = "red";
+  } else {
+    feedback.textContent = "Formato válido";
+    feedback.style.color = "green";
+  }
+});
+
+// Vista previa de imágenes
+document.getElementById("imagenesLogo").addEventListener("change", function () {
+  const previewContainer = document.getElementById("preview");
+  previewContainer.innerHTML = "";
+  Array.from(this.files).forEach(file => {
+    const reader = new FileReader();
+    reader.onload = function (e) {
+      const img = document.createElement("img");
+      img.src = e.target.result;
+      img.style.maxWidth = "150px";
+      img.style.margin = "10px";
+      previewContainer.appendChild(img);
+    };
+    reader.readAsDataURL(file);
+  });
+});
+
       tipoUsuarioSelect.addEventListener("change", function () {
         if (this.value === "proveedor") {
           camposProveedor.classList.remove("d-none");
