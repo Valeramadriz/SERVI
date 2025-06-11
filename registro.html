@@ -18,7 +18,11 @@
       crossorigin="anonymous"
     ></script>
     <link rel="stylesheet" href="css/styles.css" />
+    <!-- Tagify CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.css">
   </head>
+
+
   <body id="page-top" class="body-registro">
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark fixed-top navbar-servi-fondo" id="mainNav">
@@ -109,8 +113,9 @@
               <input type="text" class="form-control" id="nombreEmpresa" />
             </div>
             <div class="col-md-6">
-              <label for="categoriaServicio" class="form-label">Categoría del servicio</label>
-              <input type="text" class="form-control" id="categoriaServicio" />
+              <label for="categoriaServicio" class="form-label">Categorías del servicio</label>
+              <input type="text" class="form-control" id="categoriaServicio" placeholder="Ej: limpieza, electricidad, etc." />
+              <small class="form-text text-muted">Elegí una o varias categorías. Podés escribir nuevas si no aparecen.</small>
             </div>
             <div class="col-md-12">
               <label for="descripcionServicio" class="form-label">Descripción del servicio</label>
@@ -212,5 +217,65 @@ document.getElementById("imagenesLogo").addEventListener("change", function () {
       });
     </script>
     
+    <!-- Fragmento mejorado de registro.html para guardar en LocalStorage -->
+    <script>
+      // Activar Tagify en el campo de categorías
+      var input = document.getElementById('categoriaServicio');
+      var tagify = new Tagify(input, {
+        whitelist: ["limpieza", "electricidad", "peluquería", "niñera", "plomería", "jardinería", "barbería", "masajes", "gasista", "costura", "carpintería"],
+        dropdown: {
+          enabled: 0,           // muestra sugerencias al escribir
+          fuzzySearch: true,    // activa búsqueda parcial
+          position: "all",      // muestra lista debajo
+          caseSensitive: false
+        }
+      });
+    </script>
+    
+  <script>
+  document.getElementById("registroForm").addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    const tipo = document.getElementById("tipoUsuario").value;
+    const nombre = document.getElementById("nombre").value;
+    const apellido = document.getElementById("apellido").value;
+    const email = document.getElementById("email").value;
+    const telefono = document.getElementById("telefono").value;
+    const password = document.getElementById("password").value;
+
+    const usuario = {
+      tipo,
+      nombre,
+      apellido,
+      email,
+      telefono,
+      password
+    };
+
+    if (tipo === "proveedor") {
+      usuario.empresa = document.getElementById("nombreEmpresa").value;
+      usuario.categoria = document.getElementById("categoriaServicio").value;
+      usuario.descripcion = document.getElementById("descripcionServicio").value;
+      usuario.ubicacion = document.getElementById("ubicacionEmpresa").value;
+      usuario.certificados = [...document.getElementById("certificados").files].map(f => f.name);
+      usuario.imagenes = [...document.getElementById("imagenesLogo").files].map(f => f.name);
+    }
+
+    // Obtener lista actual
+    const lista = JSON.parse(localStorage.getItem("usuariosServi")) || [];
+
+    // Agregar nuevo usuario
+    lista.push(usuario);
+
+    // Guardar de nuevo
+    localStorage.setItem("usuariosServi", JSON.stringify(lista));
+
+    alert("¡Registro guardado en el navegador!");
+    this.reset();
+    document.getElementById("camposProveedor").classList.add("d-none");
+  });
+</script>
+<!-- Tagify JS -->
+<script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify"></script>
   </body>
 </html>
