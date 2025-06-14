@@ -11370,6 +11370,12 @@ section#contact form#contactForm :-ms-input-placeholder {
   margin-bottom: 0.5rem;
 }
 
+.tarjeta-proveedor h3 {
+  font-size: 1.1rem; /* o ajustalo a gusto */
+  margin-bottom: 0.25rem;
+}
+
+
 
 
 /* Botón especial para proveedores en el menú */
