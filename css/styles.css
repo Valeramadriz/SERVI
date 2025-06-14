@@ -11317,6 +11317,28 @@ section#contact form#contactForm :-ms-input-placeholder {
   font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 }
 
+
+/* === Boton de proveedores en index === */
+.btn-ver-proveedores {
+  display: inline-block;
+  background-color: #007BFF;
+  color: #fff;
+  padding: 12px 20px;
+  text-decoration: none;
+  border-radius: 8px;
+  font-weight: bold;
+  margin-top: 20px;
+  transition: background-color 0.3s ease;
+}
+
+.btn-ver-proveedores:hover {
+  background-color: #0056b3;
+}
+
+
+
+
+
 /* === Tarjetas de proveedores === */
 .contenedor-proveedores {
   display: flex;
