@@ -11369,3 +11369,22 @@ section#contact form#contactForm :-ms-input-placeholder {
   border-radius: 8px;
   margin-bottom: 0.5rem;
 }
+
+
+
+/* Botón especial para proveedores en el menú */
+.btn-proveedores {
+  background-color: #ffc800;  /* color amarillo destacado */
+  color: #ffffff !important;  /* fuerza el color blanco */
+  border-radius: 5px;
+  padding: 8px 15px;
+  font-weight: bold;
+  transition: all 0.3s ease;
+  font-family: 'Montserrat', sans-serif !important;
+  text-transform: uppercase;
+}
+
+.btn-proveedores:hover {
+  background-color: #e0b000;
+  color: #ffffff !important;
+}
