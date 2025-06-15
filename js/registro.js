@@ -77,3 +77,15 @@ document.getElementById("registroForm").addEventListener("submit", function (e) 
   this.reset();
   document.getElementById("camposProveedor").classList.add("d-none");
 });
+
+// ubicacion appi
+function initAutocomplete() {
+  const input = document.getElementById("ubicacionEmpresa");
+  if (input) {
+    const autocomplete = new google.maps.places.Autocomplete(input, {
+      types: ["geocode"], // Opcional: solo direcciones
+      componentRestrictions: { country: "ar" } // Opcional: limitar a Argentina
+    });
+  }
+}
+
