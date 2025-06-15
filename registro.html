@@ -13,10 +13,6 @@
       href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700"
       rel="stylesheet"
     />
-    <script
-      src="https://use.fontawesome.com/releases/v6.3.0/js/all.js"
-      crossorigin="anonymous"
-    ></script>
     <link rel="stylesheet" href="css/styles.css" />
     <!-- Tagify CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.css">
@@ -117,26 +113,39 @@
               <input type="text" class="form-control" id="categoriaServicio" placeholder="Ej: limpieza, electricidad, etc." />
               <small class="form-text text-muted">Elegí una o varias categorías. Podés escribir nuevas si no aparecen.</small>
             </div>
+            <div class="col-md-6">
+                <label for="modalidadServicio" class="form-label">Modalidad del servicio</label>
+                <select class="form-select" id="modalidadServicio" required>
+                  <option value="">Seleccionar...</option>
+                  <option value="presencial">Presencial</option>
+                  <option value="virtual">Virtual</option>
+                  <option value="ambos">Ambos</option>
+                </select>
+            </div>
+
+            <div class="col-md-6">
+              <label for="ubicacionEmpresa" class="form-label">Ubicación (zona o barrio)</label>
+              <input type="text" class="form-control" id="ubicacionEmpresa" placeholder="Ej: Palermo, Lomas de Zamora, Córdoba" />
+            </div>
+
             <div class="col-md-12">
               <label for="descripcionServicio" class="form-label">Descripción del servicio</label>
               <textarea class="form-control" id="descripcionServicio" rows="3"></textarea>
             </div>
-            <div class="col-md-6">
-              <label for="ubicacionEmpresa" class="form-label">Ubicación de la empresa</label>
-              <input type="text" class="form-control" id="ubicacionEmpresa" />
-            </div>
+
             <div class="col-md-6">
               <label for="certificados" class="form-label">Certificados de capacitación</label>
               <input type="file" class="form-control" id="certificados" multiple />
             </div>
+
             <div class="col-md-12">
               <label for="imagenesLogo" class="form-label">Logo o imágenes del servicio</label>
               <input type="file" class="form-control" id="imagenesLogo" multiple />
             </div>
+
             <div class="col-md-12">
               <div id="preview" class="d-flex flex-wrap mt-3"></div>
             </div>
-            
           </div>
 
           <div class="col-12 text-center mt-4">
@@ -147,136 +156,9 @@
         </form>
       </div>
     </section>
-
+    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
     <script src="js/scripts.js"></script>
-    <script>
-      const tipoUsuarioSelect = document.getElementById("tipoUsuario");
-      const camposProveedor = document.getElementById("camposProveedor");
-    
-      // Validación de email en tiempo real
-document.getElementById("email").addEventListener("input", function () {
-  const email = this.value;
-  const feedback = document.getElementById("emailFeedback");
-  if (!email.includes("@")) {
-    feedback.textContent = "El correo debe contener '@'";
-    feedback.style.color = "red";
-  } else {
-    feedback.textContent = "Formato válido";
-    feedback.style.color = "green";
-  }
-});
-
-// Vista previa de imágenes
-document.getElementById("imagenesLogo").addEventListener("change", function () {
-  const previewContainer = document.getElementById("preview");
-  previewContainer.innerHTML = "";
-  Array.from(this.files).forEach(file => {
-    const reader = new FileReader();
-    reader.onload = function (e) {
-      const img = document.createElement("img");
-      img.src = e.target.result;
-      img.style.maxWidth = "150px";
-      img.style.margin = "10px";
-      previewContainer.appendChild(img);
-    };
-    reader.readAsDataURL(file);
-  });
-});
-
-      tipoUsuarioSelect.addEventListener("change", function () {
-        if (this.value === "proveedor") {
-          camposProveedor.classList.remove("d-none");
-        } else {
-          camposProveedor.classList.add("d-none");
-        }
-      });
-    
-      document.getElementById("registroForm").addEventListener("submit", function (e) {
-        e.preventDefault();
-    
-        const tipo = tipoUsuarioSelect.value;
-        if (!tipo) {
-          alert("Seleccioná el tipo de usuario.");
-          return;
-        }
-    
-        if (tipo === "proveedor") {
-          const nombreEmpresa = document.getElementById("nombreEmpresa").value;
-          const categoria = document.getElementById("categoriaServicio").value;
-          const descripcion = document.getElementById("descripcionServicio").value;
-    
-          if (!nombreEmpresa || !categoria || !descripcion) {
-            alert("Completá todos los campos requeridos del proveedor.");
-            return;
-          }
-        }
-    
-        // Envío simulado
-        alert("¡Registro enviado con éxito!");
-        // Aquí iría el envío real (por fetch, AJAX, etc.)
-      });
-    </script>
-    
     <script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify"></script>
-
-    <!-- Fragmento mejorado de registro.html para guardar en LocalStorage -->
-    <script>
-      // Activar Tagify en el campo de categorías
-      var input = document.getElementById('categoriaServicio');
-      var tagify = new Tagify(input, {
-        whitelist: ["limpieza", "electricidad", "peluquería", "niñera", "plomería", "jardinería", "barbería", "masajes", "gasista", "costura", "carpintería"],
-        dropdown: {
-          enabled: 0,           // muestra sugerencias al escribir
-          fuzzySearch: true,    // activa búsqueda parcial
-          position: "all",      // muestra lista debajo
-          caseSensitive: false
-        }
-      });
-    </script>
-    
-  <script>
-  document.getElementById("registroForm").addEventListener("submit", function (e) {
-    e.preventDefault();
-
-    const tipo = document.getElementById("tipoUsuario").value;
-    const nombre = document.getElementById("nombre").value;
-    const apellido = document.getElementById("apellido").value;
-    const email = document.getElementById("email").value;
-    const telefono = document.getElementById("telefono").value;
-    const password = document.getElementById("password").value;
-
-    const usuario = {
-      tipo,
-      nombre,
-      apellido,
-      email,
-      telefono,
-      password
-    };
-
-    if (tipo === "proveedor") {
-      usuario.empresa = document.getElementById("nombreEmpresa").value;
-      usuario.categoria = document.getElementById("categoriaServicio").value;
-      usuario.descripcion = document.getElementById("descripcionServicio").value;
-      usuario.ubicacion = document.getElementById("ubicacionEmpresa").value;
-      usuario.certificados = [...document.getElementById("certificados").files].map(f => f.name);
-      usuario.imagenes = [...document.getElementById("imagenesLogo").files].map(f => f.name);
-    }
-
-    // Obtener lista actual
-    const lista = JSON.parse(localStorage.getItem("usuariosServi")) || [];
-
-    // Agregar nuevo usuario
-    lista.push(usuario);
-
-    // Guardar de nuevo
-    localStorage.setItem("usuariosServi", JSON.stringify(lista));
-
-    alert("¡Registro guardado en el navegador!");
-    this.reset();
-    document.getElementById("camposProveedor").classList.add("d-none");
-  });
-</script>
-
+    <script src="js/registro.js"></script>
   </body>
 </html>
